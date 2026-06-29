@@ -1,14 +1,17 @@
 'use client';
-
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { demoProducts, Product } from '@/lib/demo-data';
 
-export default function DuenoDashboard() {
+export default function BodegaPage() {
   const [products, setProducts] = useState<Product[]>(demoProducts);
 
   const ajustar = (id: number, delta: number) => {
     setProducts(prev =>
-      prev.map(p => p.id === id ? { ...p, stock: Math.max(0, p.stock + delta), alerta: Math.max(0, p.stock + delta) < 5 } : p)
+      prev.map(p => p.id === id
+        ? { ...p, stock: Math.max(0, p.stock + delta), alerta: Math.max(0, p.stock + delta) < 5 }
+        : p
+      )
     );
   };
 
@@ -16,56 +19,66 @@ export default function DuenoDashboard() {
   const alertas = products.filter(p => p.alerta).length;
 
   return (
-    <main className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-black text-[#FF6B00] mb-2">🔑 Panel del Dueño</h1>
-      <p className="text-gray-400 mb-6">Pirotecnia KYO — Inventario de bodega</p>
+    <motion.main
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25 }}
+      className="px-4 pt-6 pb-4 max-w-lg mx-auto"
+    >
+      <h1 className="text-2xl font-black text-white mb-1">Bodega</h1>
+      <p className="text-gray-500 text-sm mb-5">Pirotecnia KYO · Inventario activo</p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-[#111] rounded-xl p-4 border border-gray-800">
-          <p className="text-gray-400 text-sm">Productos</p>
-          <p className="text-3xl font-black text-[#FF6B00]">{products.length}</p>
-        </div>
-        <div className="bg-[#111] rounded-xl p-4 border border-gray-800">
-          <p className="text-gray-400 text-sm">Piezas totales</p>
-          <p className="text-3xl font-black text-[#FF6B00]">{total}</p>
-        </div>
-        <div className="bg-[#111] rounded-xl p-4 border border-gray-800">
-          <p className="text-gray-400 text-sm">Alertas stock</p>
-          <p className="text-3xl font-black text-red-500">{alertas}</p>
-        </div>
-        <div className="bg-[#111] rounded-xl p-4 border border-gray-800">
-          <p className="text-gray-400 text-sm">Hoy</p>
-          <p className="text-3xl font-black text-[#FFD700]">Lunes</p>
-        </div>
+      <div className="grid grid-cols-3 gap-3 mb-6">
+        {[
+          { label: 'Productos', value: products.length, color: 'text-[#FF6B00]' },
+          { label: 'Piezas', value: total, color: 'text-[#FF6B00]' },
+          { label: 'Alertas', value: alertas, color: alertas > 0 ? 'text-red-400' : 'text-green-400' },
+        ].map((k, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, delay: 0.06 * i }}
+            className="bg-[#111] rounded-xl p-3 border border-white/5 text-center"
+          >
+            <p className={`text-2xl font-black ${k.color}`}>{k.value}</p>
+            <p className="text-gray-500 text-[11px] mt-0.5">{k.label}</p>
+          </motion.div>
+        ))}
       </div>
 
-      <div className="space-y-3">
-        {products.map(p => (
-          <div
+      <div className="space-y-2">
+        {products.map((p, i) => (
+          <motion.div
             key={p.id}
-            className={`bg-[#111] rounded-xl p-4 flex items-center justify-between border ${p.alerta ? 'border-red-500/50' : 'border-gray-800'}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, delay: 0.04 * i }}
+            className={`bg-[#111] rounded-xl px-4 py-3 flex items-center justify-between border ${p.alerta ? 'border-red-500/30' : 'border-white/5'}`}
           >
-            <div>
-              <p className="font-semibold text-white">{p.nombre}</p>
-              <p className="text-gray-500 text-sm">{p.categoria} · ${p.precio} MXN/pza</p>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-white text-sm truncate">{p.nombre}</p>
+              <p className="text-gray-600 text-xs">{p.categoria} · ${p.precio} MXN</p>
             </div>
-            <div className="flex items-center gap-3">
-              {p.alerta && <span className="text-xs text-red-400 font-bold">⚠️ Bajo</span>}
+            <div className="flex items-center gap-2 ml-3">
+              {p.alerta && (
+                <span className="text-[10px] text-red-400 font-bold bg-red-500/10 px-1.5 py-0.5 rounded">BAJO</span>
+              )}
               <button
                 onClick={() => ajustar(p.id, -1)}
-                className="w-8 h-8 rounded-full bg-[#FF6B00]/20 text-[#FF6B00] font-bold hover:bg-[#FF6B00]/40 transition"
+                className="w-7 h-7 rounded-lg bg-[#FF6B00]/15 text-[#FF6B00] font-black text-lg flex items-center justify-center active:scale-95 transition-transform"
               >−</button>
-              <span className={`w-8 text-center font-black text-lg ${p.alerta ? 'text-red-400' : 'text-white'}`}>
+              <span className={`w-7 text-center font-black tabular-nums ${p.alerta ? 'text-red-400' : 'text-white'}`}>
                 {p.stock}
               </span>
               <button
                 onClick={() => ajustar(p.id, +1)}
-                className="w-8 h-8 rounded-full bg-green-500/20 text-green-400 font-bold hover:bg-green-500/40 transition"
+                className="w-7 h-7 rounded-lg bg-green-500/15 text-green-400 font-black text-lg flex items-center justify-center active:scale-95 transition-transform"
               >+</button>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </main>
+    </motion.main>
   );
 }
