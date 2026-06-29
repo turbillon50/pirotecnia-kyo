@@ -2,7 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --brand-primary: #0a0a0a;
+  --brand-accent: #FF6B00;
+  --brand-highlight: #FFD700;
+  --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+  --r-sm: 8px; --r-md: 16px; --r-lg: 24px;
+  --anim-fast: 150ms; --anim-normal: 250ms;
+}
+
 body {
   background-color: #0a0a0a;
   color: white;
+  padding-bottom: env(safe-area-inset-bottom);
 }

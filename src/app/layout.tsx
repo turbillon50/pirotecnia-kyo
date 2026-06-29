@@ -1,18 +1,31 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import BottomNav from '@/components/bottom-nav';
+import SplashScreen from '@/components/splash-screen';
+import SWRegister from '@/components/sw-register';
 
 export const metadata: Metadata = {
   title: 'Pirotecnia KYO',
   description: 'Sistema de inventario — Pirotecnia KYO, Oaxaca',
+  manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#FF6B00',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#FF6B00" />
+      </head>
       <body className="bg-[#0a0a0a] text-white min-h-screen font-sans pb-16">
+        <SplashScreen />
         {children}
         <BottomNav />
+        <SWRegister />
       </body>
     </html>
   );

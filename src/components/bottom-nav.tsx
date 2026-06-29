@@ -1,6 +1,9 @@
 'use client';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+
+const MotionLink = motion(Link);
 
 const items = [
   {
@@ -27,14 +30,15 @@ export default function BottomNav() {
       {items.map((item) => {
         const active = pathname === item.href;
         return (
-          <Link
+          <MotionLink
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center gap-0.5 px-4 transition-colors ${active ? 'text-[#FF6B00]' : 'text-gray-600 hover:text-gray-400'}`}
+            whileTap={{ scale: 0.95 }}
+            className={`flex flex-col items-center gap-0.5 px-4 transition-colors ${active ? 'text-[#FF6B00]' : 'text-[#4b5563] hover:text-gray-400'}`}
           >
             <span className="w-5 h-5" dangerouslySetInnerHTML={{ __html: item.icon }} />
             <span className="text-[10px] font-medium">{item.label}</span>
-          </Link>
+          </MotionLink>
         );
       })}
     </nav>
