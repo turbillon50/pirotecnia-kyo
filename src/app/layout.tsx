@@ -1,17 +1,18 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import AppLayout from '@/components/layouts/app-layout';
+import BottomNav from '@/components/bottom-nav';
 
 export const metadata: Metadata = {
-  title: 'Pirotecnia KYO — Inventario',
-  description: 'Sistema de inventario para Pirotecnia KYO, Oaxaca',
+  title: 'Pirotecnia KYO',
+  description: 'Sistema de inventario — Pirotecnia KYO, Oaxaca',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className="bg-[#0a0a0a] text-white min-h-screen font-sans">
-        <AppLayout>{children}</AppLayout>
+      <body className="bg-[#0a0a0a] text-white min-h-screen font-sans pb-16">
+        {children}
+        <BottomNav />
       </body>
     </html>
   );
