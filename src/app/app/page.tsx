@@ -3,21 +3,16 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { demoProducts, Product } from '@/lib/demo-data';
 
-const ICON_GRID = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-    <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
-    <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+const IconBox = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
   </svg>
 );
-const ICON_STACK = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-    <polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" />
-  </svg>
-);
-const ICON_ALERT = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-    <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+const IconAlert = ({ ok }: { ok: boolean }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke={ok ? '#4ade80' : '#f87171'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
   </svg>
 );
 
@@ -25,22 +20,17 @@ export default function BodegaPage() {
   const [products, setProducts] = useState<Product[]>(demoProducts);
 
   const ajustar = (id: number, delta: number) => {
-    setProducts(prev =>
-      prev.map(p => p.id === id
-        ? { ...p, stock: Math.max(0, p.stock + delta), alerta: Math.max(0, p.stock + delta) < 5 }
-        : p
+    setProducts((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? { ...p, stock: Math.max(0, p.stock + delta), alerta: Math.max(0, p.stock + delta) < 5 }
+          : p
       )
     );
   };
 
   const total = products.reduce((a, p) => a + p.stock, 0);
-  const alertas = products.filter(p => p.alerta).length;
-
-  const kpis = [
-    { label: 'Productos', value: products.length, color: 'text-[#FF6B00]', icon: ICON_GRID },
-    { label: 'Piezas', value: total, color: 'text-[#FF6B00]', icon: ICON_STACK },
-    { label: 'Alertas', value: alertas, color: alertas > 0 ? 'text-red-400' : 'text-green-400', icon: ICON_ALERT },
-  ];
+  const alertas = products.filter((p) => p.alerta).length;
 
   return (
     <motion.main
@@ -53,16 +43,20 @@ export default function BodegaPage() {
       <p className="text-gray-500 text-sm mb-5">Pirotecnia KYO · Inventario activo</p>
 
       <div className="grid grid-cols-3 gap-3 mb-6">
-        {kpis.map((k, i) => (
+        {[
+          { label: 'Productos', value: products.length, icon: <IconBox /> },
+          { label: 'Piezas', value: total, icon: <IconBox /> },
+          { label: 'Alertas', value: alertas, icon: <IconAlert ok={alertas === 0} /> },
+        ].map((k, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, delay: 0.06 * i }}
-            className="bg-[#111] rounded-xl p-3 border border-white/5 text-center"
+            className="bg-[#111] rounded-[var(--r-md)] p-3 border border-white/5 text-center"
           >
-            <span className={`inline-flex justify-center mb-1.5 ${k.color}`}>{k.icon}</span>
-            <p className={`text-2xl font-black ${k.color}`}>{k.value}</p>
+            <span className="w-5 h-5 inline-block mb-1">{k.icon}</span>
+            <p className="text-2xl font-black text-white">{k.value}</p>
             <p className="text-gray-500 text-[11px] mt-0.5">{k.label}</p>
           </motion.div>
         ))}
@@ -75,7 +69,7 @@ export default function BodegaPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, delay: 0.04 * i }}
-            className={`bg-[#111] rounded-xl px-4 py-3 flex items-center justify-between border ${p.alerta ? 'border-red-500/30' : 'border-white/5'}`}
+            className={`bg-[#111] rounded-[var(--r-md)] px-4 py-3 flex items-center justify-between border ${p.alerta ? 'border-red-500/30' : 'border-white/5'}`}
           >
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-white text-sm truncate">{p.nombre}</p>
@@ -88,18 +82,20 @@ export default function BodegaPage() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={() => ajustar(p.id, -1)}
-                className="w-7 h-7 rounded-lg bg-[#FF6B00]/15 text-[#FF6B00] font-black text-lg flex items-center justify-center"
-                aria-label="Restar"
-              >−</motion.button>
+                className="w-9 h-9 rounded-[var(--r-sm)] bg-[#FF6B00]/15 text-[#FF6B00] font-black text-lg flex items-center justify-center"
+              >
+                −
+              </motion.button>
               <span className={`w-7 text-center font-black tabular-nums ${p.alerta ? 'text-red-400' : 'text-white'}`}>
                 {p.stock}
               </span>
               <motion.button
                 whileTap={{ scale: 0.97 }}
-                onClick={() => ajustar(p.id, +1)}
-                className="w-7 h-7 rounded-lg bg-green-500/15 text-green-400 font-black text-lg flex items-center justify-center"
-                aria-label="Sumar"
-              >+</motion.button>
+                onClick={() => ajustar(p.id, 1)}
+                className="w-9 h-9 rounded-[var(--r-sm)] bg-green-500/15 text-green-400 font-black text-lg flex items-center justify-center"
+              >
+                +
+              </motion.button>
             </div>
           </motion.div>
         ))}
