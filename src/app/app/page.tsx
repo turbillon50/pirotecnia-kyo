@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { demoProducts, Product } from '@/lib/demo-data';
-import { IconBox, IconAlert, IconClock, IconPlus } from '@/components/icons';
+
 
 const IconBoxLocal = ({ c = '#FF6B00' }: { c?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
