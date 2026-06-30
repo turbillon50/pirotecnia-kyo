@@ -4,57 +4,61 @@
 
 :root {
   --brand-primary: #0a0a0a;
-  --brand-surface: #15110a;
-  --brand-accent: #FF6B00;
-  --brand-highlight: #FFD700;
-  --brand-ember: #ff3d00;
-  --sp-1: 8px;
-  --sp-2: 16px;
-  --sp-3: 24px;
-  --sp-4: 32px;
-  --r-sm: 8px;
-  --r-md: 16px;
-  --r-lg: 24px;
-  --anim-fast: 150ms;
-  --anim-normal: 250ms;
-}
-
-html {
-  font-display: swap;
+  --brand-accent: #FF7F00;
+  --brand-highlight: #FFC300;
+  --kyo-pink: #FF2A5E;
+  --kyo-purple: #8A2BE2;
+  --kyo-blue: #00D1FF;
+  --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+  --r-sm: 8px; --r-md: 16px; --r-lg: 24px;
+  --anim-fast: 150ms; --anim-normal: 250ms;
 }
 
 body {
   background-color: var(--brand-primary);
-  background-image:
-    radial-gradient(ellipse 600px 400px at 50% -10%, rgba(255,107,0,0.12), transparent 60%),
-    radial-gradient(ellipse 400px 300px at 90% 20%, rgba(255,215,0,0.04), transparent 70%);
-  background-attachment: fixed;
   color: #ffffff;
   padding-bottom: env(safe-area-inset-bottom);
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
 }
 
-.kyo-card {
-  background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
-  border: 1px solid rgba(255,255,255,0.06);
-  position: relative;
+@keyframes smoke-drift {
+  0%   { transform: translateY(0) scale(1); opacity: 0.55; }
+  50%  { transform: translateY(-18px) scale(1.05); opacity: 0.7; }
+  100% { transform: translateY(0) scale(1); opacity: 0.55; }
 }
-.kyo-card::before {
-  content: "";
+.kyo-smoke {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,107,0,0.4), transparent);
+  inset: 0;
+  pointer-events: none;
+  filter: blur(60px);
+  background:
+    radial-gradient(ellipse 50% 40% at 8% 15%, var(--kyo-purple), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 92% 10%, var(--brand-accent), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 12% 85%, var(--kyo-pink), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 90% 88%, var(--kyo-blue), transparent 70%);
+  animation: smoke-drift 7s ease-in-out infinite;
 }
 
-.kyo-spark-text {
-  background: linear-gradient(180deg, #FFD700 0%, #FF6B00 60%, #ff3d00 100%);
+.kyo-metal-text {
+  background: linear-gradient(180deg, #ffffff 0%, #d8d8d8 25%, #9a9a9a 50%, #e8e8e8 75%, #ffffff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  filter: contrast(1.3) saturate(1.1);
 }
 
-.kyo-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+.kyo-scratch-pink   { color: #FF2A5E; text-shadow: 0 0 12px rgba(255,42,94,0.5), 2px 2px 0 #000; }
+.kyo-scratch-blue    { color: #00D1FF; text-shadow: 0 0 12px rgba(0,209,255,0.5), 2px 2px 0 #000; }
+.kyo-scratch-purple { color: #8A2BE2; text-shadow: 0 0 12px rgba(138,43,226,0.5), 2px 2px 0 #000; }
+
+.kyo-star {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 35%, 2% 35%);
+  background: linear-gradient(135deg, var(--brand-highlight), var(--brand-accent));
+  filter: drop-shadow(0 0 5px rgba(255,195,0,0.7));
+}
+
+.kyo-card {
+  background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
+  border: 1px solid rgba(255,255,255,0.08);
 }
