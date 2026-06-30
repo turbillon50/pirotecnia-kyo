@@ -43,7 +43,7 @@ export default function HomePage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="min-h-[calc(100svh-56px)] pb-10"
+      className="min-h-[calc(100svh-56px)] pb-28"
     >
       {/* HERO: cartel real de la marca */}
       <section className="relative w-full overflow-hidden">
