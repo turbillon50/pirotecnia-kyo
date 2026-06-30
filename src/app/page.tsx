@@ -43,48 +43,48 @@ export default function HomePage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="min-h-[calc(100svh-56px)]"
+      className="min-h-[calc(100svh-56px)] pb-10"
     >
-      <div className="relative px-6 pt-10 pb-9 text-center overflow-hidden">
-        <div className="kyo-smoke" />
+      {/* HERO: cartel real de la marca */}
+      <section className="relative w-full overflow-hidden">
+        <motion.img
+          src="/brand/hero.jpg"
+          alt="Pirotecnia KYO"
+          initial={{ scale: 1.06, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="w-full block select-none"
+          draggable={false}
+        />
+        {/* fundido inferior hacia el fondo */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
+        {/* badge ubicación */}
+        <div className="absolute inset-x-0 bottom-3 flex justify-center px-4">
+          <span className="inline-flex items-center gap-1.5 text-[#FFC300] text-[0.7rem] font-bold tracking-[0.16em] uppercase bg-black/55 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#FFC300]/30">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFC300" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            Zimatlán de Álvarez · Oaxaca
+          </span>
+        </div>
+      </section>
 
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0, rotate: -15 }}
-          animate={{ scale: 1, opacity: 1, rotate: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="relative z-10 inline-block mb-2"
-        >
-          <div className="w-5 h-5 kyo-star mx-auto mb-3" />
-          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FF7F00" strokeWidth="1.2" className="mx-auto">
-            <path d="M12 2l2.7 6 6 2.7-6 2.7L12 19.4l-2.7-6-6-2.7 6-2.7z" fill="#FF7F00" stroke="none" />
-          </svg>
-        </motion.div>
-
-        <p className="relative z-10 text-[#FFC300] text-xs font-bold tracking-[0.2em] uppercase mb-3 drop-shadow-[0_0_8px_rgba(255,195,0,0.5)]">
-          Zimatlan de Álvarez · Oaxaca
-        </p>
-
-        <h1 className="relative z-10 text-[3rem] leading-[0.92] font-black kyo-metal-text mb-0.5 tracking-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>
-          PIROTECNIA
-        </h1>
-        <h2 className="relative z-10 text-[3.6rem] leading-[0.9] font-black mb-5 tracking-tight flex justify-center gap-1">
-          <span className="kyo-scratch-purple">K</span>
-          <span className="kyo-scratch-blue">Y</span>
-          <span className="kyo-scratch-pink">O</span>
-        </h2>
-
-        <p className="relative z-10 text-gray-300 text-sm max-w-xs mx-auto leading-relaxed">
+      {/* intro */}
+      <div className="px-6 pt-5 text-center">
+        <p className="text-gray-300 text-sm max-w-xs mx-auto leading-relaxed">
           Eusebio Ambrosio elabora cada pieza a mano. Esta es la plataforma que ordena su bodega y vende por él.
         </p>
       </div>
 
-      <div className="px-5 -mt-1 space-y-2.5 max-w-md mx-auto">
+      {/* features */}
+      <div className="px-5 mt-5 space-y-2.5 max-w-md mx-auto">
         {features.map((f, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.08 * i, ease: 'easeOut' }}
+            transition={{ duration: 0.3, delay: 0.06 * i, ease: 'easeOut' }}
             className="kyo-card rounded-[var(--r-md)] p-4 flex items-start gap-4"
             style={{ borderTopColor: f.color, borderTopWidth: '2px' }}
           >
@@ -99,6 +99,7 @@ export default function HomePage() {
         ))}
       </div>
 
+      {/* CTAs */}
       <div className="px-5 mt-7 flex gap-3 max-w-md mx-auto">
         <motion.div whileTap={{ scale: 0.96 }} className="flex-1">
           <Link
