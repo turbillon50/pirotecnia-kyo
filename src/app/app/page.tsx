@@ -3,20 +3,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { demoProducts, Product } from '@/lib/demo-data';
-
-
-const IconBoxLocal = ({ c = '#FF6B00' }: { c?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-  </svg>
-);
-const IconAlertLocal = ({ ok }: { ok: boolean }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke={ok ? '#4ade80' : '#f87171'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-    <line x1="12" y1="9" x2="12" y2="13" />
-    <line x1="12" y1="17" x2="12.01" y2="17" />
-  </svg>
-);
+import FuseHeader from '@/components/fuse-header';
 
 export default function BodegaPage() {
   const [products, setProducts] = useState<Product[]>(demoProducts);
@@ -33,28 +20,24 @@ export default function BodegaPage() {
 
   const total = products.reduce((a, p) => a + p.stock, 0);
   const alertas = products.filter((p) => p.alerta).length;
+  const maxStock = 30;
 
   return (
-    <motion.main
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
-      className="px-4 pt-6 pb-4 max-w-lg mx-auto"
-    >
-      <div className="flex items-center justify-between mb-1">
-        <h1 className="text-2xl font-black text-white">Bodega</h1>
-        <div className="flex gap-2">
+    <main className="px-5 pt-6 pb-4 max-w-lg mx-auto kyo-grain min-h-[calc(100svh-56px)]">
+      <div className="flex items-start justify-between">
+        <FuseHeader title="Bodega" subtitle="Pirotecnia KYO · Inventario activo" />
+        <div className="flex gap-2 pt-1">
           <Link href="/app/movimientos">
-            <motion.div whileTap={{ scale: 0.95 }} className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <motion.div whileTap={{ scale: 0.92 }} className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FF6B00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
             </motion.div>
           </Link>
           <Link href="/app/nuevo">
-            <motion.div whileTap={{ scale: 0.95 }} className="w-9 h-9 rounded-full bg-[#FF6B00] flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <motion.div whileTap={{ scale: 0.92 }} className="w-9 h-9 rounded-full bg-gradient-to-b from-[#FF8533] to-[#FF6B00] flex items-center justify-center shadow-[0_2px_12px_rgba(255,107,0,0.35)]">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19" />
                 <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
@@ -62,66 +45,71 @@ export default function BodegaPage() {
           </Link>
         </div>
       </div>
-      <p className="text-gray-500 text-sm mb-5">Pirotecnia KYO · Inventario activo</p>
 
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-3 gap-2.5 mb-6">
         {[
-          { label: 'Productos', value: products.length, icon: <IconBoxLocal /> },
-          { label: 'Piezas', value: total, icon: <IconBoxLocal /> },
-          { label: 'Alertas', value: alertas, icon: <IconAlertLocal ok={alertas === 0} /> },
+          { label: 'Productos', value: products.length, color: '#fff' },
+          { label: 'Piezas', value: total, color: '#FF6B00' },
+          { label: 'Alertas', value: alertas, color: alertas > 0 ? '#f87171' : '#4ade80' },
         ].map((k, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.25, delay: 0.06 * i }}
-            className="bg-[#111] rounded-[var(--r-md)] p-3 border border-white/5 text-center"
+            className="kyo-card rounded-[var(--r-md)] p-3 text-center"
           >
-            <span className="w-5 h-5 inline-block mb-1">{k.icon}</span>
-            <p className="text-2xl font-black text-white">{k.value}</p>
-            <p className="text-gray-500 text-[11px] mt-0.5">{k.label}</p>
+            <p className="text-2xl font-black tabular-nums" style={{ color: k.color }}>{k.value}</p>
+            <p className="text-gray-600 text-[10px] mt-0.5 uppercase tracking-wide font-medium">{k.label}</p>
           </motion.div>
         ))}
       </div>
 
-      <div className="space-y-2">
-        {products.map((p, i) => (
-          <motion.div
-            key={p.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, delay: 0.04 * i }}
-            className={`bg-[#111] rounded-[var(--r-md)] px-4 py-3 flex items-center justify-between border ${p.alerta ? 'border-red-500/30' : 'border-white/5'}`}
-          >
-            <Link href={`/app/${p.id}`} className="flex-1 min-w-0">
-              <p className="font-semibold text-white text-sm truncate">{p.nombre}</p>
-              <p className="text-gray-600 text-xs">{p.categoria} · ${p.precio} MXN</p>
-            </Link>
-            <div className="flex items-center gap-2 ml-3">
-              {p.alerta && (
-                <span className="text-[10px] text-red-400 font-bold bg-red-500/10 px-1.5 py-0.5 rounded">BAJO</span>
-              )}
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={() => ajustar(p.id, -1)}
-                className="w-9 h-9 rounded-[var(--r-sm)] bg-[#FF6B00]/15 text-[#FF6B00] font-black text-lg flex items-center justify-center"
-              >
-                −
-              </motion.button>
-              <span className={`w-7 text-center font-black tabular-nums ${p.alerta ? 'text-red-400' : 'text-white'}`}>
-                {p.stock}
-              </span>
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={() => ajustar(p.id, 1)}
-                className="w-9 h-9 rounded-[var(--r-sm)] bg-green-500/15 text-green-400 font-black text-lg flex items-center justify-center"
-              >
-                +
-              </motion.button>
-            </div>
-          </motion.div>
-        ))}
+      <div className="space-y-2.5">
+        {products.map((p, i) => {
+          const pct = Math.min(100, (p.stock / maxStock) * 100);
+          return (
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: 0.035 * i }}
+              className="kyo-card rounded-[var(--r-md)] p-3.5 overflow-hidden relative"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <Link href={`/app/${p.id}`} className="flex-1 min-w-0 mr-3">
+                  <p className="font-semibold text-white text-sm truncate">{p.nombre}</p>
+                  <p className="text-gray-600 text-xs">{p.categoria} · ${p.precio} MXN</p>
+                </Link>
+                <div className="flex items-center gap-2 shrink-0">
+                  <motion.button
+                    whileTap={{ scale: 0.92 }}
+                    onClick={() => ajustar(p.id, -1)}
+                    className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/10 text-[#FF6B00] font-black text-base flex items-center justify-center"
+                  >−</motion.button>
+                  <span className={`w-7 text-center font-black tabular-nums text-sm ${p.alerta ? 'text-red-400' : 'text-white'}`}>
+                    {p.stock}
+                  </span>
+                  <motion.button
+                    whileTap={{ scale: 0.92 }}
+                    onClick={() => ajustar(p.id, 1)}
+                    className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/10 text-green-400 font-black text-base flex items-center justify-center"
+                  >+</motion.button>
+                </div>
+              </div>
+              <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${pct}%` }}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.03, ease: 'easeOut' }}
+                  className="h-full rounded-full"
+                  style={{ background: p.alerta ? 'linear-gradient(90deg,#f87171,#ef4444)' : 'linear-gradient(90deg,#FFD700,#FF6B00)' }}
+                />
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
-    </motion.main>
+    </main>
   );
 }
