@@ -99,6 +99,36 @@ export default function HomePage() {
         ))}
       </div>
 
+
+      {/* EL TALLER: fotos reales del taller */}
+      <div className="mt-8">
+        <div className="px-6 flex items-baseline justify-between max-w-md mx-auto">
+          <h2 className="text-white font-black text-base tracking-tight">El taller</h2>
+          <span className="text-[#FF7F00] text-[0.65rem] font-bold tracking-[0.14em] uppercase">Hecho a mano</span>
+        </div>
+        <div className="mt-3 flex gap-3 overflow-x-auto px-5 pb-2 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {[
+            { src: '/brand/taller/castillo.jpg', label: 'Castillo en armado' },
+            { src: '/brand/taller/rueda.jpg', label: 'Rueda de carrizo' },
+            { src: '/brand/taller/carrizo.jpg', label: 'Carrizo y varas' },
+            { src: '/brand/taller/cohete.jpg', label: 'Cohete artesanal' },
+          ].map((t, i) => (
+            <motion.figure
+              key={t.src}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.35, delay: 0.05 * i, ease: 'easeOut' }}
+              className="relative shrink-0 w-[68vw] max-w-[280px] aspect-square rounded-[var(--r-md)] overflow-hidden snap-center border border-white/[0.06]"
+            >
+              <img src={t.src} alt={t.label} loading="lazy" draggable={false} className="w-full h-full object-cover select-none" />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/80 to-transparent" />
+              <figcaption className="absolute bottom-2.5 left-3 text-white text-xs font-bold drop-shadow">{t.label}</figcaption>
+            </motion.figure>
+          ))}
+        </div>
+      </div>
+
       {/* CTAs */}
       <div className="px-5 mt-7 flex gap-3 max-w-md mx-auto">
         <motion.div whileTap={{ scale: 0.96 }} className="flex-1">
