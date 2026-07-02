@@ -1,8 +1,10 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { demoProducts } from '@/lib/demo-data';
 import FuseHeader from '@/components/fuse-header';
+import { SkeletonCard } from '@/components/skeleton';
 
 const catColor: Record<string, string> = {
   Cohetes: '#FF7F00',
@@ -14,12 +16,25 @@ const catColor: Record<string, string> = {
 
 export default function StorePage() {
   const categorias = Array.from(new Set(demoProducts.map((p) => p.categoria)));
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 550);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <main className="relative px-5 pt-6 pb-4 max-w-lg mx-auto min-h-[calc(100svh-56px)] overflow-hidden">
       <div className="kyo-smoke opacity-40" style={{ animationDuration: '11s' }} />
       <div className="relative z-10">
         <FuseHeader title="Tienda" subtitle="Catálogo Pirotecnia KYO · Pide directo por WhatsApp" />
+
+        {loading && (
+          <div className="grid grid-cols-2 gap-3">
+            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+          </div>
+        )}
+
+        {!loading && <>
 
         {categorias.map((cat, ci) => (
           <div key={cat} className="mb-7">
@@ -38,12 +53,17 @@ export default function StorePage() {
                   <Link href={`/store/${p.id}`} className="block">
                     <div className="kyo-card rounded-[var(--r-md)] overflow-hidden" style={{ borderTopColor: catColor[cat], borderTopWidth: '2px' }}>
                       <div
-                        className="aspect-square flex items-center justify-center relative"
+                        className="aspect-square flex items-center justify-center relative overflow-hidden"
                         style={{ background: `radial-gradient(circle at 50% 30%, ${catColor[cat]}33, #0d0d0d 70%)` }}
                       >
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={catColor[cat]} strokeWidth="1.3" opacity="0.7">
-                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                        </svg>
+                        {p.foto ? (
+                          <img src={p.foto} alt={p.nombre} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                        ) : (
+                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={catColor[cat]} strokeWidth="1.3" opacity="0.7">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                          </svg>
+                        )}
+                        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
                         {p.alerta && (
                           <span className="absolute top-2 right-2 text-[9px] font-bold bg-black/70 backdrop-blur-sm text-[#FF2A5E] px-1.5 py-0.5 rounded-full">
                             ÚLTIMAS
@@ -61,6 +81,7 @@ export default function StorePage() {
             </div>
           </div>
         ))}
+        </>}
       </div>
     </main>
   );
