@@ -1,8 +1,12 @@
-const CACHE = 'kyo-v4';
+const CACHE = 'kyo-v5';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE));
+});
+
+self.addEventListener('message', (e) => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
@@ -15,7 +19,6 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const req = e.request;
-  // Network-first para navegación y documentos/CSS/JS: siempre intenta traer lo nuevo
   if (req.mode === 'navigate' || req.destination === 'document' || req.destination === 'style' || req.destination === 'script') {
     e.respondWith(
       fetch(req)
@@ -28,8 +31,5 @@ self.addEventListener('fetch', (e) => {
     );
     return;
   }
-  // Resto (imágenes, fuentes): cache-first normal
-  e.respondWith(
-    caches.match(req).then((r) => r || fetch(req))
-  );
+  e.respondWith(caches.match(req).then((r) => r || fetch(req)));
 });
