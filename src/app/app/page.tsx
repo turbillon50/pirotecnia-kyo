@@ -4,11 +4,14 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { demoProducts, Product } from '@/lib/demo-data';
 import FuseHeader from '@/components/fuse-header';
+import { useToast } from '@/components/toast';
 
 export default function BodegaPage() {
   const [products, setProducts] = useState<Product[]>(demoProducts);
+  const toast = useToast();
 
   const ajustar = (id: number, delta: number) => {
+    const prod = products.find((p) => p.id === id);
     setProducts((prev) =>
       prev.map((p) =>
         p.id === id
@@ -16,6 +19,10 @@ export default function BodegaPage() {
           : p
       )
     );
+    if (prod) {
+      if (delta > 0) toast(`Entrada registrada · ${prod.nombre}`);
+      else if (prod.stock > 0) toast(`Salida registrada · ${prod.nombre}`, 'warn');
+    }
   };
 
   const total = products.reduce((a, p) => a + p.stock, 0);
