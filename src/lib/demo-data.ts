@@ -10,16 +10,16 @@ export type Product = {
 };
 
 export const demoProducts: Product[] = [
-  { id: 1, nombre: "Cohete 7 Patas", categoria: "Cohetes", precio: 120, stock: 12, alerta: false, descripcion: "Cohete tradicional de 7 efectos consecutivos, ideal para eventos grandes.", foto: "" },
-  { id: 2, nombre: "Cohete Ala de Fuego", categoria: "Cohetes", precio: 150, stock: 3, alerta: true, descripcion: "Despegue con estela dorada y silbido característico.", foto: "" },
-  { id: 3, nombre: "Castillo 15cm", categoria: "Castillos", precio: 250, stock: 8, alerta: false, descripcion: "Castillo artesanal de mediano formato, múltiples figuras pirotécnicas.", foto: "" },
-  { id: 4, nombre: "Castillo Mágico 20cm", categoria: "Castillos", precio: 350, stock: 2, alerta: true, descripcion: "Pieza grande de exhibición, secuencia de luces y sonidos.", foto: "" },
-  { id: 5, nombre: "Bengala Estrella LED", categoria: "Luces", precio: 45, stock: 30, alerta: false, descripcion: "Bengala clásica, segura para niños supervisados.", foto: "" },
-  { id: 6, nombre: "Bengala Nitro Multicolor", categoria: "Luces", precio: 60, stock: 4, alerta: true, descripcion: "Cambios de color en cascada, alta duración.", foto: "" },
-  { id: 7, nombre: "Bomba Atronadora 3kg", categoria: "Bombas", precio: 500, stock: 7, alerta: false, descripcion: "Bomba de gran formato, sonido potente para fiestas patronales.", foto: "" },
-  { id: 8, nombre: "Bomba Tumbadora 5kg", categoria: "Bombas", precio: 850, stock: 1, alerta: true, descripcion: "Máxima potencia, uso profesional con permiso correspondiente.", foto: "" },
-  { id: 9, nombre: "Torito Fuego Veloz", categoria: "Toritos", precio: 30, stock: 18, alerta: false, descripcion: "Torito tradicional, ligero y de rápida combustión.", foto: "" },
-  { id: 10, nombre: "Torito Chispa Loca", categoria: "Toritos", precio: 28, stock: 3, alerta: true, descripcion: "Variante con más chispa y efecto serpenteante.", foto: "" },
+  { id: 1, nombre: "Cohete 7 Patas", categoria: "Cohetes", precio: 120, stock: 12, alerta: false, descripcion: "Cohete tradicional de 7 efectos consecutivos, ideal para eventos grandes.", foto: "/brand/productos/cohetes.jpg" },
+  { id: 2, nombre: "Cohete Ala de Fuego", categoria: "Cohetes", precio: 150, stock: 3, alerta: true, descripcion: "Despegue con estela dorada y silbido característico.", foto: "/brand/productos/cohetes.jpg" },
+  { id: 3, nombre: "Castillo 15cm", categoria: "Castillos", precio: 250, stock: 8, alerta: false, descripcion: "Castillo artesanal de mediano formato, múltiples figuras pirotécnicas.", foto: "/brand/productos/castillos.jpg" },
+  { id: 4, nombre: "Castillo Mágico 20cm", categoria: "Castillos", precio: 350, stock: 2, alerta: true, descripcion: "Pieza grande de exhibición, secuencia de luces y sonidos.", foto: "/brand/productos/castillos.jpg" },
+  { id: 5, nombre: "Bengala Estrella LED", categoria: "Luces", precio: 45, stock: 30, alerta: false, descripcion: "Bengala clásica, segura para niños supervisados.", foto: "/brand/productos/luces.jpg" },
+  { id: 6, nombre: "Bengala Nitro Multicolor", categoria: "Luces", precio: 60, stock: 4, alerta: true, descripcion: "Cambios de color en cascada, alta duración.", foto: "/brand/productos/luces.jpg" },
+  { id: 7, nombre: "Bomba Atronadora 3kg", categoria: "Bombas", precio: 500, stock: 7, alerta: false, descripcion: "Bomba de gran formato, sonido potente para fiestas patronales.", foto: "/brand/productos/bombas.jpg" },
+  { id: 8, nombre: "Bomba Tumbadora 5kg", categoria: "Bombas", precio: 850, stock: 1, alerta: true, descripcion: "Máxima potencia, uso profesional con permiso correspondiente.", foto: "/brand/productos/bombas.jpg" },
+  { id: 9, nombre: "Torito Fuego Veloz", categoria: "Toritos", precio: 30, stock: 18, alerta: false, descripcion: "Torito tradicional, ligero y de rápida combustión.", foto: "/brand/productos/toritos.jpg" },
+  { id: 10, nombre: "Torito Chispa Loca", categoria: "Toritos", precio: 28, stock: 3, alerta: true, descripcion: "Variante con más chispa y efecto serpenteante.", foto: "/brand/productos/toritos.jpg" },
 ];
 
 export type Movement = {
